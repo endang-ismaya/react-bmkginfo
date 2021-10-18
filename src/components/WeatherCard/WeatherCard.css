@@ -15,3 +15,9 @@
 .card-container:hover {
     transform: scale(1.05);
 }
+
+.time {
+    font-family: 'Lobster', cursive;
+    color: #3b4909;
+    letter-spacing: 2px;
+}

@@ -12,3 +12,14 @@ h1 {
     font-size: 80px !important;
     color: #293a39;
 }
+
+h2,
+h3 {
+    font-family: 'Lobster', cursive;
+    color: #293a39;
+}
+
+.time {
+    font-family: 'Lobster', cursive;
+    color: #293a39;
+}
