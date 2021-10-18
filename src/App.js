@@ -1,28 +1,38 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import WeatherCard from './components/WeatherCard';
-
+import { WeatherCardList } from './components/WeatherCardList/WeatherCardList';
+import { SearchBox } from './components/SearchBox/SearchBox';
 
 function App() {
+    const [weathers, setWeathers] = useState([]);
+    const [searchField, setSearchField] = useState('');
 
-  const [data, setData] = useState([])
-  
-  useEffect(() => {
-    const urlData = "http://127.0.0.1:8000/weather-forecast"
-    fetch(urlData).then(res => res.json()).then(res => setData(res.data))
-  }, [])
+    useEffect(() => {
+        const urlData = 'http://127.0.0.1:8000/weather-forecast';
+        fetch(urlData)
+            .then((res) => res.json())
+            .then((res) => setWeathers(res.data));
+    }, []);
 
+    const handleChange = (e) => {
+        const city = e.target.value;
+        setSearchField(city);
+        // const filteredCity = weathers.filter((weather) => weather.city.toLowerCase().includes(city.toLowerCase()));
+        // setWeathers(filteredCity);
+    };
 
-  return (
-    <div className="container">
-      <h1 className="text-center mt-5">Weather Forecasts</h1>
-        <div className="grid">
-          {
-            data.map(item => <WeatherCard item={item} key={item.city}/>)
-          }
+    function search(weathers) {
+        return weathers.filter((weather) => weather.city.toLowerCase().includes(searchField.toLowerCase()));
+    }
+
+    return (
+        <div className="container text-center">
+            <h1 className="mt-5">Weather Forecast</h1>
+            <SearchBox placeholder="search city..." handleChange={handleChange} value={searchField} />
+            <WeatherCardList weathers={search(weathers)} />
+            <div className="mb-5"></div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;
