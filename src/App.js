@@ -1,7 +1,7 @@
-import './App.css';
 import { useState, useEffect } from 'react';
 import { WeatherCardList } from './components/WeatherCardList/WeatherCardList';
 import { SearchBox } from './components/SearchBox/SearchBox';
+import './App.css';
 
 function App() {
     const [weathers, setWeathers] = useState([]);
@@ -10,8 +10,15 @@ function App() {
     useEffect(() => {
         const urlData = 'http://127.0.0.1:8000/weather-forecast';
         fetch(urlData)
-            .then((res) => res.json())
-            .then((res) => setWeathers(res.data));
+            .then((res) => {
+                if (res.ok) {
+                    res.json();
+                } else {
+                    return new Error("Can't fetch the site.");
+                }
+            })
+            .then((res) => setWeathers(res.data))
+            .catch((err) => console.log(err));
     }, []);
 
     const handleChange = (e) => {
